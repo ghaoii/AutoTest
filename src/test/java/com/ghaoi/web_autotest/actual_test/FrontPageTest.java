@@ -1,14 +1,13 @@
 package com.ghaoi.web_autotest.actual_test;
 
 import com.ghaoi.web_autotest.common.CommonDriver;
-import com.ghaoi.web_autotest.common.DriverQuite;
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.chrome.ChromeDriver;
 
 
-public class FrontPageTest{
-    private ChromeDriver driver = CommonDriver.getDriver();
+public class FrontPageTest extends CommonDriver{
+    private ChromeDriver driver = getDriver();
 
     /**
      * 跳转链接
@@ -39,11 +38,6 @@ public class FrontPageTest{
         // 检查跳转页面的元素是否存在
         String pageElement = driver.findElement(By.cssSelector("body > div > div > div > div.hd > ul > li")).getText();
         Assertions.assertEquals("商品入库", pageElement);
-    }
-
-    @AfterAll
-    static void closeDriver() {
-        DriverQuite.driverQuite();
     }
 
 }
