@@ -9,6 +9,8 @@ import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.chrome.ChromeDriver;
 
+import java.io.IOException;
+
 public class DeleteFruitInfo extends CommonDriver{
     private static ChromeDriver driver = getDriver();
 
@@ -24,11 +26,12 @@ public class DeleteFruitInfo extends CommonDriver{
     }
 
     @Test
-    void deleteInfo() throws InterruptedException {
+    void deleteInfo() throws InterruptedException, IOException {
         driver.findElement(By.cssSelector("#tbRecord > tbody > tr:nth-child(1) > td.delete > button")).click();
         Thread.sleep(2000);// 睡两秒，确保警告窗口弹出
         Alert alert = driver.switchTo().alert();
         alert.accept();
+        getScreenShot(getClass().getName());
         String str = driver.findElement(By.cssSelector("#tbRecord > thead > tr > th:nth-child(2)")).getText();
         Assertions.assertEquals("商品名称", str);
     }

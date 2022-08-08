@@ -12,6 +12,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import org.openqa.selenium.By;
 import org.openqa.selenium.chrome.ChromeDriver;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Stream;
@@ -36,7 +37,7 @@ public class InBoundTest extends CommonDriver{
 
     @ParameterizedTest
     @MethodSource
-    void addFruit(String name, List<Integer> list) {
+    void addFruit(String name, List<Integer> list) throws IOException {
         // 商品名称
         driver.findElement(By.cssSelector("#name")).sendKeys(name);
         // 库存
@@ -53,14 +54,17 @@ public class InBoundTest extends CommonDriver{
         driver.findElement(By.cssSelector("body > div > div > div > div.bd > ul > div > div > " +
                 "div > div > div > div.am-u-sm-12.am-u-md-8.am-u-md-pull-4 > form > " +
                 "div:nth-child(7) > div > input")).click();
+        // 获取屏幕截图，查看是否返回了主界面
+        getScreenShot(getClass().getName());
         String string = driver.findElement(By.cssSelector("body > ul > li > ul > a:nth-child(1) > li")).getText();
         Assertions.assertEquals("上架商品", string);
     }
 
     static Stream<Arguments> addFruit() {
         GetFruit fruit = new GetFruit();
-        return Stream.of(Arguments.arguments(fruit.getName(), fruit.getPrice()),
-                Arguments.arguments(fruit.getName(), fruit.getPrice()),
-                Arguments.arguments(fruit.getName(), fruit.getPrice()));
+        return Stream.of(Arguments.arguments(fruit.getName(), fruit.getPrice()));
+//        return Stream.of(Arguments.arguments(fruit.getName(), fruit.getPrice()),
+//                Arguments.arguments(fruit.getName(), fruit.getPrice()),
+//                Arguments.arguments(fruit.getName(), fruit.getPrice()));
     }
 }
